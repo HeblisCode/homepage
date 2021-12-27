@@ -1,0 +1,15 @@
+{
+  "title": "testTitle",
+  "links": [
+    {
+      "name": "testLinkName",
+      "url": "www.google.com",
+      "icon": "url"
+    },
+    {
+      "name": "testLinkName2",
+      "url": "www.youtube.com",
+      "icon": "url"
+    }
+  ]
+}
