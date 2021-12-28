@@ -1,39 +1,52 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Button from "./Components/Button/Button";
 import LinkContainer from "./Components/LinkContainer/LinkContainer";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import GlobalStyle from "./globalStyles";
-import Title from "./Title/Title";
+import Title from "./Components/Title/Title";
+import useConfig from "./utils/useConfig";
 
 function App() {
-  const config = {
-    title: "testTitle",
-    links: [
-      {
-        name: "testLinkName",
-        url: "https://www.google.com",
-        icon: "https://www.google.com/s2/favicons?domain=google.com",
-      },
-      {
-        name: "testLinkName2",
-        url: "https://www.youtube.com",
-        icon: "https://www.google.com/s2/favicons?domain=youtube.com",
-      },
-    ],
-  };
+  const [titleManager, linksManager] = useConfig();
   const [isEditable, setIsEditable] = useState(false);
+
+  const addLink = (name, url) => {
+    linksManager.addLink(name, url);
+  };
+
+  const deleteLink = (id) => {
+    linksManager.deleteLink(id);
+  };
+
+  const updateLink = (id, name, url) => {
+    linksManager.updateLink(id, name, url);
+  };
 
   const toggleEdit = () => {
     setIsEditable(!isEditable);
   };
 
+  const test = () => {
+    addLink("testLink123", "https://www.reddit.com");
+  };
+
   return (
     <StyledApp className="App">
       <GlobalStyle />
-      <Title title={config.title} />
+      <Title title={titleManager.title.string} />
       <SearchBar />
-      <LinkContainer linksArray={config.links} isEditable={isEditable} />
+      {linksManager.links && linksManager.links.length > 0 ? (
+        <LinkContainer
+          linksArray={linksManager.links}
+          isEditable={isEditable}
+          handleUpdate={updateLink}
+          handleDelete={deleteLink}
+        />
+      ) : (
+        <p>ADD SOME LINKS</p>
+      )}
+      <Button text={"TEST ADD"} handleClick={test} />
       <Button text={isEditable ? "Done" : "Edit"} handleClick={toggleEdit} />
     </StyledApp>
   );
