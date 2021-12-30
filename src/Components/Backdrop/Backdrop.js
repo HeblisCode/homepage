@@ -27,4 +27,5 @@ const StyledBackdrop = styled(motion.div)`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.459);
+  z-index: 100;
 `;

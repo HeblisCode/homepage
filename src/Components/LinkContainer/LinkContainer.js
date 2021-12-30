@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import LinkIcon from "../LinkIcon/LinkIcon";
 
 export default function LinkContainer({
@@ -7,7 +8,7 @@ export default function LinkContainer({
   handleDelete,
 }) {
   return (
-    <div>
+    <StyledLinkContainer>
       {linksArray.map((link, i) => {
         return (
           <LinkIcon
@@ -19,6 +20,15 @@ export default function LinkContainer({
           />
         );
       })}
-    </div>
+    </StyledLinkContainer>
   );
 }
+
+const StyledLinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 50%;
+  gap: 2rem;
+`;

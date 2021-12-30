@@ -8,6 +8,7 @@ import Title from "./Components/Title/Title";
 import useConfig from "./utils/useConfig";
 import { AnimatePresence } from "framer-motion";
 import Form from "./Components/Form/Form";
+import MaterialIconButton from "./Components/MaterialIconButton/MaterialIconButton";
 
 function App() {
   const [titleManager, linksManager] = useConfig();
@@ -76,7 +77,14 @@ function App() {
       ) : (
         <p>ADD SOME LINKS</p>
       )}
-      <Button text={"TEST ADD"} handleClick={openForm} />
+      <div className="buttonContainer">
+        <MaterialIconButton icon="add" size="3rem" handleClick={openForm} />
+        <MaterialIconButton
+          icon={isEditable ? "done" : "edit"}
+          size="3rem"
+          handleClick={toggleEdit}
+        />
+      </div>
       <AnimatePresence>
         {showForm && (
           <Form
@@ -88,7 +96,6 @@ function App() {
           />
         )}
       </AnimatePresence>
-      <Button text={isEditable ? "Done" : "Edit"} handleClick={toggleEdit} />
     </StyledApp>
   );
 }
@@ -96,10 +103,16 @@ function App() {
 const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 2.5rem;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
+
+  .buttonContainer {
+    display: flex;
+    gap: 1rem;
+  }
 `;
 
 export default App;

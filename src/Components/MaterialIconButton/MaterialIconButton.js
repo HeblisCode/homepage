@@ -34,6 +34,6 @@ const StyledMaterialIconButton = styled.div`
   cursor: pointer;
 
   span {
-    font-size: 80%;
+    font-size: ${({ size }) => +size.split("rem")[0] * 10 + "px"};
   }
 `;
