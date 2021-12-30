@@ -1,0 +1,10 @@
+{
+  "fields": [
+    {
+      "type": "text",
+      "name": "field one",
+      "placeholder": "placeholder text",
+      "value": ""
+    }
+  ]
+}

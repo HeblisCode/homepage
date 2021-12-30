@@ -6,6 +6,8 @@ import SearchBar from "./Components/SearchBar/SearchBar";
 import GlobalStyle from "./globalStyles";
 import Title from "./Components/Title/Title";
 import useConfig from "./utils/useConfig";
+import { AnimatePresence } from "framer-motion";
+import Form from "./Components/Form/Form";
 
 function App() {
   const [titleManager, linksManager] = useConfig();
@@ -27,9 +29,37 @@ function App() {
     setIsEditable(!isEditable);
   };
 
-  const test = () => {
-    addLink("testLink123", "https://www.reddit.com");
+  const [showForm, setShowForm] = useState(false);
+
+  const openForm = () => {
+    setShowForm(true);
   };
+
+  const closeForm = () => {
+    setShowForm(false);
+  };
+
+  const submitForm = (fields) => {
+    const name = fields[0].value;
+    const url = fields[1].value;
+    addLink(name, url);
+    setShowForm(false);
+  };
+
+  const formFields = [
+    {
+      type: "text",
+      name: "Name",
+      placeholder: "Insert your shortcut name",
+      value: "",
+    },
+    {
+      type: "text",
+      name: "URL",
+      placeholder: "https://www.example.com",
+      value: "",
+    },
+  ];
 
   return (
     <StyledApp className="App">
@@ -46,7 +76,18 @@ function App() {
       ) : (
         <p>ADD SOME LINKS</p>
       )}
-      <Button text={"TEST ADD"} handleClick={test} />
+      <Button text={"TEST ADD"} handleClick={openForm} />
+      <AnimatePresence>
+        {showForm && (
+          <Form
+            title={"Update Link"}
+            fields={formFields}
+            close={closeForm}
+            submit={submitForm}
+            id={"updateLinksForm"}
+          />
+        )}
+      </AnimatePresence>
       <Button text={isEditable ? "Done" : "Edit"} handleClick={toggleEdit} />
     </StyledApp>
   );

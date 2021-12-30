@@ -1,7 +1,7 @@
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import Form from "../Form/Form";
 
 export default function LinkIcon({
   linkObj,
@@ -9,15 +9,37 @@ export default function LinkIcon({
   handleUpdate,
   handleDelete,
 }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
+  const openForm = () => {
+    setShowForm(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeForm = () => {
+    setShowForm(false);
   };
+
+  const submitForm = (formFields) => {
+    const nameValue = formFields[0].value;
+    const urlValue = formFields[1].value;
+    handleUpdate(linkObj.id, nameValue, urlValue);
+    setShowForm(false);
+  };
+
+  const formFields = [
+    {
+      type: "text",
+      name: "Name",
+      placeholder: "Insert your shortcut name",
+      value: linkObj.name,
+    },
+    {
+      type: "text",
+      name: "URL",
+      placeholder: "https://www.example.com",
+      value: linkObj.url,
+    },
+  ];
 
   return (
     <div>
@@ -27,13 +49,15 @@ export default function LinkIcon({
       {isEditable && (
         <button onClick={() => handleDelete(linkObj.id)}>DELETE</button>
       )}
-      {isEditable && <button onClick={openModal}>EDIT URL</button>}
+      {isEditable && <button onClick={openForm}>EDIT URL</button>}
       <AnimatePresence>
-        {showModal && (
-          <Modal
-            text="test"
-            handleClose={closeModal}
-            handleSubmit={handleUpdate}
+        {showForm && (
+          <Form
+            title={"Update Link"}
+            fields={formFields}
+            close={closeForm}
+            submit={submitForm}
+            id={"updateLinksForm"}
           />
         )}
       </AnimatePresence>

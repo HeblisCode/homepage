@@ -2,11 +2,8 @@ import { useEffect, useState } from "react/cjs/react.development";
 
 export default function useConfig() {
   const EMPTY_TITLE = {
-    title: {
-      isActive: true,
-      string: "Test Title",
-    },
-    links: [],
+    isActive: true,
+    string: "Test Title",
   };
   const savedConfig = JSON.parse(localStorage.getItem("homePageConfigJSON"));
   const [title, setTitle] = useState(savedConfig?.title || EMPTY_TITLE);
@@ -63,6 +60,7 @@ export default function useConfig() {
       linkToUpdate = {
         ...linkToUpdate,
         url: url,
+        icon: GET_FAVICON_URL + getDomainFromURL(url),
       };
     }
 
@@ -81,83 +79,3 @@ export default function useConfig() {
     { links, addLink, updateLink, deleteLink },
   ];
 }
-
-// class ConfigManager {
-//   configJSON = {};
-//   MAX_ID_SIZE = 1000000000;
-//   GET_FAVICON_URL = "https://www.google.com/s2/favicons?domain="; //concatenate domain name to get the favicon url
-
-//   constructor() {
-//     const savedConfigJSON = localStorage.getItem("homePageConfigJSON");
-//     if (savedConfigJSON) {
-//       this.configJSON = JSON.parse(savedConfigJSON);
-//     } else {
-//       this.configJSON = {
-//         title: "",
-//         links: [],
-//       };
-//     }
-//   }
-
-//   getConfig() {
-//     return this.configJSON;
-//   }
-
-//   getDomainFromURL(url) {
-//     const temp = url.split(".").reverse();
-//     return temp[1] + "." + temp[0];
-//   }
-
-//   deleteLinkById(id) {
-//     const filteredLinks = this.configJSON.links.filter(
-//       (link) => link.id !== id
-//     );
-//     this.configJSON.links = filteredLinks;
-//   }
-
-//   addLink(name, url) {
-//     const id = Math.floor(Math.random() * this.MAX_ID_SIZE);
-//     if (
-//       this.configJSON.links &&
-//       this.configJSON.links.some((link) => link.id === id)
-//     ) {
-//       this.addLink(name, url);
-//     } else {
-//       const domain = this.getDomainFromURL(url);
-//       const icon = this.GET_FAVICON_URL + domain;
-//       const newLink = {
-//         id: id,
-//         name: name,
-//         url: url,
-//         icon: icon,
-//       };
-
-//       this.configJSON.links.push(newLink);
-//     }
-//   }
-
-//   updateLink(id, name, url) {
-//     const updateIndex = this.configJSON.links.findIndex((el) => el.id === id);
-//     let linkToUpdate = this.configJSON.links[updateIndex];
-
-//     if (name) {
-//       linkToUpdate = {
-//         ...linkToUpdate,
-//         name: name,
-//       };
-//     }
-
-//     if (url) {
-//       linkToUpdate = {
-//         ...linkToUpdate,
-//         url: url,
-//       };
-//     }
-
-//     this.configJSON.links[updateIndex] = linkToUpdate;
-//   }
-
-//   updateTitle(title) {
-//     this.configJSON.title = title;
-//   }
-// }

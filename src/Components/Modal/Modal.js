@@ -2,9 +2,8 @@ import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import Backdrop from "../Backdrop/Backdrop";
-import Button from "../Button/Button";
 
-export default function Modal({ text, handleClose, handleSubmit }) {
+export default function Modal({ title, handleClose, children }) {
   const dropInAnimation = {
     hidden: {
       y: "-100vh",
@@ -26,8 +25,6 @@ export default function Modal({ text, handleClose, handleSubmit }) {
     },
   };
 
-  console.log(handleClose);
-
   return (
     <Backdrop handleClick={handleClose}>
       <StyledModal
@@ -38,9 +35,8 @@ export default function Modal({ text, handleClose, handleSubmit }) {
         animate="visible"
         exit="exit"
       >
-        <p>{text}</p>
-        <Button text={"Confirm"} handleClick={handleClose} />
-        <Button text={"Cancel"} handleClick={handleClose} />
+        <h2>{title}</h2>
+        {children}
       </StyledModal>
     </Backdrop>
   );
